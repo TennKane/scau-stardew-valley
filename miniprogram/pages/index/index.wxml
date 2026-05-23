@@ -51,9 +51,9 @@
       <text class="landmark-desc">{{item.description}}</text>
       <view class="landmark-footer">
         <text class="landmark-difficulty">
-          难度: {{'🌾'.repeat(item.difficulty)}}
+          难度: {{item.difficultyDisplay}}
         </text>
-        <text class="landmark-hint">💡 {{item.hints[0]}}</text>
+        <text class="landmark-hint">💡 {{item.firstHint}}</text>
       </view>
     </view>
   </view>

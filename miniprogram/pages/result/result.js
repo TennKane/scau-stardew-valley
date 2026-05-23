@@ -15,7 +15,12 @@ Page({
   onLoad(options) {
     const { landmarkId } = options
     if (landmarkId) {
-      const landmark = landmarks.getLandmark(landmarkId)
+      const raw = landmarks.getLandmark(landmarkId)
+      const landmark = {
+        ...raw,
+        difficultyDisplay: '🌾 '.repeat(raw.difficulty),
+        seasonDisplay: raw.seasonHint.join(' / ')
+      }
       this.setData({
         landmark,
         discovered: true,

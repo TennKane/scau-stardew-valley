@@ -52,6 +52,20 @@ Page({
     })
   },
 
+  /** 摄像头就绪 */
+  onCameraReady() {
+    this.setData({ cameraReady: true })
+  },
+
+  /** 摄像头错误 */
+  onError(e) {
+    console.error('Camera error:', e)
+    this.setData({
+      hintText: '摄像头启动失败，请检查权限',
+      hintVisible: true
+    })
+  },
+
   /** 开始循环扫描 */
   startScanLoop() {
     this.scanning = true

@@ -18,11 +18,11 @@
     </view>
     <view class="info-row">
       <text class="info-label">⭐ 难度</text>
-      <text>{{'🌾 '.repeat(landmark.difficulty)}}</text>
+      <text>{{landmark.difficultyDisplay}}</text>
     </view>
     <view class="info-row">
       <text class="info-label">📅 适合季节</text>
-      <text>{{landmark.seasonHint.join(' / ')}}</text>
+      <text>{{landmark.seasonDisplay}}</text>
     </view>
   </view>
 

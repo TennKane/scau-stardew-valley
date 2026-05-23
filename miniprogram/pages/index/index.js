@@ -43,10 +43,15 @@ Page({
   },
 
   loadData() {
+    const all = landmarks.LANDMARKS.map(l => ({
+      ...l,
+      difficultyDisplay: '🌾'.repeat(l.difficulty),
+      firstHint: l.hints[0]
+    }))
     this.setData({
-      landmarks: landmarks.LANDMARKS,
+      landmarks: all,
       progress: {
-        total: landmarks.LANDMARKS.length,
+        total: all.length,
         discovered: 0,
         percentage: 0
       }
@@ -60,7 +65,12 @@ Page({
   filterByCategory(e) {
     const category = e.currentTarget.dataset.category
     const cat = category === '全部' ? '' : category
-    const filtered = cat ? landmarks.getLandmarksByCategory(cat) : landmarks.LANDMARKS
+    const raw = cat ? landmarks.getLandmarksByCategory(cat) : landmarks.LANDMARKS
+    const filtered = raw.map(l => ({
+      ...l,
+      difficultyDisplay: '🌾'.repeat(l.difficulty),
+      firstHint: l.hints[0]
+    }))
 
     this.setData({
       selectedCategory: category,

@@ -1,4 +1,7 @@
 <!-- 相机打卡页 -->
+<page-meta>
+  <navigation-bar title="探索" front-color="#ffffff" background-color="#5c3d2e" />
+</page-meta>
 <view class="camera-page">
 
   <!-- 摄像头 -->
