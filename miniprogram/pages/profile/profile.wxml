@@ -1,13 +1,17 @@
 <!-- 个人页 -->
 <view class="page-profile">
 
-  <!-- 用户卡片 -->
+  <!-- 用户卡片 — 已登录 -->
   <view class="user-card card" wx:if="{{hasLogin}}">
-    <view class="user-avatar">
-      <text class="avatar-placeholder">👤</text>
-    </view>
+    <button class="avatar-btn" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+      <image class="user-avatar-img" src="{{userInfo.avatarUrl || ''}}" wx:if="{{userInfo.avatarUrl}}" />
+      <text class="avatar-placeholder" wx:else>👤</text>
+    </button>
     <view class="user-info">
-      <text class="user-name">{{userInfo.nickName || '星露谷探险家'}}</text>
+      <input class="user-name-input" type="nickname"
+        value="{{userInfo.nickName || '星露谷探险家'}}"
+        bindinput="onNicknameInput"
+        placeholder="点我设置昵称" />
       <text class="user-id">ID: {{openid || '---'}}</text>
     </view>
   </view>
@@ -41,7 +45,7 @@
   </view>
 
   <!-- 最近动态 -->
-  <view class="section">
+  <view class="section" wx:if="{{recentActivity.length}}">
     <text class="section-title">📜 最近动态</text>
     <view class="activity-list">
       <view class="activity-item" wx:for="{{recentActivity}}" wx:key="index">
@@ -50,6 +54,11 @@
         <text class="activity-time">{{item.time}}</text>
       </view>
     </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-section" wx:if="{{hasLogin}}">
+    <view class="btn-logout" bindtap="logout">退出登录</view>
   </view>
 
 </view>

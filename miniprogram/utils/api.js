@@ -54,5 +54,10 @@ module.exports = {
   getLeaderboard: withFallback(
     (type) => callFunction('leaderboard', { type }),
     MOCK.leaderboard
+  ),
+
+  updateUser: withFallback(
+    (data) => callFunction('updateUser', data),
+    { code: 0, message: '更新成功' }
   )
 }
