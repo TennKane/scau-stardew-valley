@@ -1,19 +1,9 @@
 /**
- * 云函数调用封装
- * 云不可用时返回模拟数据
+ * API 封装
+ * 云环境开通前返回模拟数据
  */
-const app = getApp()
-
-const callFunction = (name, data = {}) => {
-  if (!app.globalData.cloudReady) {
-    return Promise.reject({ errMsg: 'cloud not ready', code: -1 })
-  }
-  return wx.cloud.callFunction({ name, data }).then(res => res.result)
-}
-
-/** 模拟数据 */
 const MOCK = {
-  login: { code: 0, openid: 'mock_openid', isNewUser: true },
+  login: { code: 0, openid: 'demo_user', isNewUser: true },
   recognize: { code: 0, landmarkId: 'library', confidence: 0.92, landmarkName: '图书馆' },
   checkin: { code: 0, checkinId: 'mock_id', message: '打卡成功' },
   landmarks: { code: 0, data: [] },
@@ -21,32 +11,26 @@ const MOCK = {
   leaderboard: { code: 0, data: [] }
 }
 
+const idList = ['gate', 'library', 'cafeteria', 'stadium', 'lake', 'statue']
+
 module.exports = {
-  login() {
-    return callFunction('login').catch(() => MOCK.login)
-  },
+  login() { return Promise.resolve(MOCK.login) },
 
   recognize(frameData) {
-    return callFunction('recognize', { frame: frameData }).catch(() => ({
+    return Promise.resolve({
       ...MOCK.recognize,
-      landmarkId: ['gate', 'library', 'cafeteria', 'stadium', 'lake', 'statue'][Math.floor(Math.random() * 6)],
-      landmarkName: '模拟地标'
-    }))
+      landmarkId: idList[Math.floor(Math.random() * idList.length)],
+      landmarkName: '模拟识别'
+    })
   },
 
   checkin(landmarkId, photoUrl, confidence) {
-    return callFunction('checkin', { landmarkId, photoUrl, confidence }).catch(() => MOCK.checkin)
+    return Promise.resolve(MOCK.checkin)
   },
 
-  getLandmarks() {
-    return callFunction('landmarks').catch(() => MOCK.landmarks)
-  },
+  getLandmarks() { return Promise.resolve(MOCK.landmarks) },
 
-  getProgress() {
-    return callFunction('progress').catch(() => MOCK.progress)
-  },
+  getProgress() { return Promise.resolve(MOCK.progress) },
 
-  getLeaderboard(type) {
-    return callFunction('leaderboard', { type }).catch(() => MOCK.leaderboard)
-  }
+  getLeaderboard(type) { return Promise.resolve(MOCK.leaderboard) }
 }
