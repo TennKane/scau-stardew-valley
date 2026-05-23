@@ -14,14 +14,13 @@ Page({
   },
 
   onLoad() {
-    if (!require('../../utils/auth').check()) return
-    this.loadData()
     this.setDateInfo()
   },
 
   onShow() {
     if (!require('../../utils/auth').check()) return
-    this.loadProgress()
+    if (this.data.allLandmarks.length === 0) this.loadData()
+    else this.loadProgress()
   },
 
   setDateInfo() {

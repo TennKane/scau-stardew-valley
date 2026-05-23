@@ -11,14 +11,12 @@ Page({
     loading: true
   },
 
-  onLoad() {
-    if (!require('../../utils/auth').check()) return
-    this.loadData()
-  },
+  onLoad() {},
 
   onShow() {
     if (!require('../../utils/auth').check()) return
-    this.loadProgress()
+    if (this.data.stats.total === 0) this.loadData()
+    else this.loadProgress()
   },
 
   async loadData() {
