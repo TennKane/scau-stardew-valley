@@ -7,6 +7,7 @@ Page({
   data: {
     userInfo: null,
     hasLogin: false,
+    isAdmin: false,
     stats: {
       totalCheckins: 0,
       totalBadges: 0,
@@ -33,14 +34,16 @@ Page({
       this.setData({
         hasLogin: true,
         userInfo: app.globalData.userInfo,
-        openid: saved.openid
+        openid: saved.openid,
+        isAdmin: saved.role === 'admin'
       })
       this.loadStats()
     } else if (app.globalData.userInfo) {
       this.setData({
         hasLogin: true,
         userInfo: app.globalData.userInfo,
-        openid: app.globalData.openid
+        openid: app.globalData.openid,
+        isAdmin: app.globalData.role === 'admin'
       })
     }
   },
@@ -53,27 +56,19 @@ Page({
       nickName: nickName || current.nickName || '星露谷探险家',
       avatarUrl: avatarUrl !== undefined ? avatarUrl : (current.avatarUrl || '')
     }
-    // 本地存储
     wx.setStorageSync('userProfile', data)
-    // 更新全局
     app.globalData.userInfo = { nickName: data.nickName, avatarUrl: data.avatarUrl }
-    // 更新页面
     this.setData({ userInfo: app.globalData.userInfo })
-    // 同步到云端
     const api = require('../../utils/api')
     api.updateUser({ nickName: data.nickName, avatarUrl: data.avatarUrl })
   },
 
-  /** 选择头像 */
   onChooseAvatar(e) {
-    const avatarUrl = e.detail.avatarUrl
-    if (avatarUrl) this.saveProfile({ avatarUrl })
+    if (e.detail.avatarUrl) this.saveProfile({ avatarUrl: e.detail.avatarUrl })
   },
 
-  /** 输入昵称 */
   onNicknameInput(e) {
-    const nickName = e.detail.value
-    if (nickName) this.saveProfile({ nickName })
+    if (e.detail.value) this.saveProfile({ nickName: e.detail.value })
   },
 
   async loadStats() {
@@ -106,7 +101,7 @@ Page({
       wx.hideLoading()
       if (res && res.openid) {
         app.globalData.openid = res.openid
-        // 先试试恢复本地资料，如果没有就走默认
+        app.globalData.role = res.role || ''
         const saved = wx.getStorageSync('userProfile')
         const nickName = saved?.nickName || '星露谷探险家'
         const avatarUrl = saved?.avatarUrl || ''
@@ -114,7 +109,8 @@ Page({
         this.setData({
           hasLogin: true,
           userInfo: app.globalData.userInfo,
-          openid: res.openid
+          openid: res.openid,
+          isAdmin: res.role === 'admin'
         })
         this.saveProfile({ nickName, avatarUrl })
         this.loadStats()
@@ -125,7 +121,10 @@ Page({
     })
   },
 
-  /** 退出登录 */
+  goToAdmin() {
+    wx.navigateTo({ url: '/pages/admin/admin' })
+  },
+
   logout() {
     wx.showModal({
       title: '退出确认',
@@ -135,10 +134,12 @@ Page({
           wx.removeStorageSync('userProfile')
           app.globalData.userInfo = null
           app.globalData.openid = null
+          app.globalData.role = null
           this.setData({
             hasLogin: false,
             userInfo: null,
             openid: null,
+            isAdmin: false,
             stats: { totalCheckins: 0, totalBadges: 0, daysActive: 0, rank: '--' },
             recentActivity: []
           })

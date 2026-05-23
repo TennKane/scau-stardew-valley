@@ -1,0 +1,106 @@
+<view class="page-admin">
+
+  <!-- Tab 切换 -->
+  <view class="admin-tabs">
+    <view class="tab-item {{tab === 'landmarks' ? 'active' : ''}}" data-tab="landmarks" bindtap="switchTab">
+      📍 地标管理
+    </view>
+    <view class="tab-item {{tab === 'stats' ? 'active' : ''}}" data-tab="stats" bindtap="switchTab">
+      📊 打卡统计
+    </view>
+  </view>
+
+  <!-- ====== 地标管理 ====== -->
+  <view class="tab-content" wx:if="{{tab === 'landmarks'}}">
+
+    <!-- 工具栏 -->
+    <view class="toolbar">
+      <view class="btn-secondary btn-sm" bindtap="addLandmark">＋ 新增</view>
+      <view class="btn-secondary btn-sm" bindtap="seedLandmarks" wx:if="{{landmarks.length === 0}}">📥 导入默认</view>
+      <text class="toolbar-count">{{landmarks.length}} 个地标</text>
+    </view>
+
+    <!-- 地标列表 -->
+    <view class="admin-list">
+      <view class="admin-card" wx:for="{{landmarks}}" wx:key="_id">
+        <view class="admin-card-header">
+          <text class="admin-card-name">{{item.name}}</text>
+          <text class="badge">{{item.category}}</text>
+        </view>
+        <text class="admin-card-stardew" wx:if="{{item.stardewName}}">{{item.stardewName}}</text>
+        <view class="admin-card-actions">
+          <view class="action-btn edit" data-id="{{item._id || item.id}}" bindtap="editLandmark">编辑</view>
+          <view class="action-btn delete" data-id="{{item._id || item.id}}" bindtap="deleteLandmark">删除</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ====== 打卡统计 ====== -->
+  <view class="tab-content" wx:if="{{tab === 'stats'}}">
+    <view class="stats-overview" wx:if="{{stats}}">
+      <view class="stat-card card">
+        <text class="stat-value">{{stats.totalCheckins || 0}}</text>
+        <text class="stat-label">总打卡次数</text>
+      </view>
+      <view class="stat-card card">
+        <text class="stat-value">{{stats.totalUsers || 0}}</text>
+        <text class="stat-label">参与用户</text>
+      </view>
+      <view class="stat-card card">
+        <text class="stat-value">{{stats.totalLandmarks || 0}}</text>
+        <text class="stat-label">地标总数</text>
+      </view>
+    </view>
+    <text class="empty-text" wx:else>暂无统计数据</text>
+  </view>
+
+  <!-- ====== 新增/编辑表单弹窗 ====== -->
+  <view class="form-overlay {{showForm ? 'active' : ''}}">
+    <view class="form-sheet">
+      <view class="form-header">
+        <text class="form-title">{{editing ? '编辑地标' : '新增地标'}}</text>
+        <text class="form-close" bindtap="closeForm">✕</text>
+      </view>
+
+      <scroll-view scroll-y class="form-body">
+        <label class="form-field">
+          <text class="field-label">地标名称 *</text>
+          <input class="field-input" value="{{form.name}}" data-field="name" bindinput="onFormInput" placeholder="如：校门" />
+        </label>
+        <label class="form-field">
+          <text class="field-label">星露谷名</text>
+          <input class="field-input" value="{{form.stardewName}}" data-field="stardewName" bindinput="onFormInput" placeholder="如：知识的入口" />
+        </label>
+        <label class="form-field">
+          <text class="field-label">描述</text>
+          <textarea class="field-textarea" value="{{form.description}}" data-field="description" bindinput="onFormInput" placeholder="地标描述"></textarea>
+        </label>
+        <label class="form-field">
+          <text class="field-label">分类</text>
+          <picker mode="selector" range="{{categories}}" value="{{categories.indexOf(form.category)}}" bindchange="onCategoryChange">
+            <view class="field-picker">{{form.category}}</view>
+          </picker>
+        </label>
+        <label class="form-field">
+          <text class="field-label">难度 (1-5)</text>
+          <slider min="1" max="5" step="1" value="{{form.difficulty}}" bindchange="onDifficultyChange" />
+        </label>
+        <label class="form-field">
+          <text class="field-label">适合季节（用顿号分隔）</text>
+          <input class="field-input" value="{{form.seasonHint}}" data-field="seasonHint" bindinput="onFormInput" placeholder="如：春、夏、秋" />
+        </label>
+        <label class="form-field">
+          <text class="field-label">线索（每行一条）</text>
+          <textarea class="field-textarea" value="{{form.hints}}" data-field="hints" bindinput="onFormInput" placeholder="一行一条线索"></textarea>
+        </label>
+      </scroll-view>
+
+      <view class="form-footer">
+        <view class="btn-secondary btn-sm" bindtap="closeForm">取消</view>
+        <view class="btn-primary btn-sm" bindtap="saveLandmark">保存</view>
+      </view>
+    </view>
+  </view>
+
+</view>

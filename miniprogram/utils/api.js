@@ -59,5 +59,10 @@ module.exports = {
   updateUser: withFallback(
     (data) => callFunction('updateUser', data),
     { code: 0, message: '更新成功' }
+  ),
+
+  admin: withFallback(
+    (data) => callFunction('admin', data),
+    { code: -1, message: '管理功能不可用' }
   )
 }

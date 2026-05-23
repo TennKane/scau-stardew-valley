@@ -4,7 +4,8 @@
     "pages/camera/camera",
     "pages/collection/collection",
     "pages/profile/profile",
-    "pages/result/result"
+    "pages/result/result",
+    "pages/admin/admin"
   ],
   "window": {
     "navigationBarBackgroundColor": "#5c3d2e",

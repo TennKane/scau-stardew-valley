@@ -56,6 +56,13 @@
     </view>
   </view>
 
+  <!-- 管理后台入口 -->
+  <view class="admin-section" wx:if="{{isAdmin}}" bindtap="goToAdmin">
+    <text class="admin-icon">⚙️</text>
+    <text class="admin-text">管理后台</text>
+    <text class="admin-arrow">›</text>
+  </view>
+
   <!-- 退出登录 -->
   <view class="logout-section" wx:if="{{hasLogin}}">
     <view class="btn-logout" bindtap="logout">退出登录</view>

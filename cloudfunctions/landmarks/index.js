@@ -1,10 +1,12 @@
 /**
- * 云函数：获取地标列表
+ * 云函数：获取地标列表（公开）
+ * 从 landmarks 集合读取，为空则返回默认数据
  */
 const cloud = require('wx-server-sdk')
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
+const db = cloud.database()
 
-const LANDMARKS = [
+const DEFAULTS = [
   { id: 'gate', name: '校门', stardewName: '知识的入口', category: '建筑', difficulty: 1, seasonHint: ['春', '秋'], hints: ['找一找学校最显眼的门'] },
   { id: 'library', name: '图书馆', stardewName: '智慧的远古祭坛', category: '建筑', difficulty: 2, seasonHint: ['春', '夏', '秋', '冬'], hints: ['最大的那栋楼，里面很安静'] },
   { id: 'cafeteria', name: '食堂', stardewName: '丰收的盛宴厅', category: '生活', difficulty: 1, seasonHint: ['春', '夏', '秋', '冬'], hints: ['饭点最热闹的地方'] },
@@ -18,5 +20,11 @@ const LANDMARKS = [
 ]
 
 exports.main = async () => {
-  return { code: 0, data: LANDMARKS }
+  try {
+    const result = await db.collection('landmarks').orderBy('difficulty', 'asc').get()
+    if (result.data.length > 0) {
+      return { code: 0, data: result.data }
+    }
+  } catch (e) {}
+  return { code: 0, data: DEFAULTS }
 }

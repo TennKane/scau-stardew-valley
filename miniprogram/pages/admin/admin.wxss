@@ -1,0 +1,135 @@
+/* ========== 管理后台 ========== */
+.page-admin {
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+
+/* Tab */
+.admin-tabs {
+  display: flex;
+  background: var(--color-wood-dark);
+}
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx;
+  color: var(--color-paper);
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 4px solid transparent;
+}
+.tab-item.active {
+  border-bottom-color: var(--color-gold);
+  background: rgba(255,255,255,0.1);
+}
+
+.tab-content { padding: 20rpx; }
+
+/* 工具栏 */
+.toolbar {
+  display: flex;
+  gap: 12rpx;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.btn-sm { padding: 8rpx 20rpx; font-size: 12px; }
+.toolbar-count {
+  flex: 1; text-align: right; font-size: 12px; color: var(--color-muted);
+}
+
+/* 地标卡片 */
+.admin-card {
+  background: var(--color-paper-light);
+  border: 2px solid var(--color-stardew-brown);
+  padding: 16rpx;
+  margin-bottom: 12rpx;
+}
+.admin-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rpx;
+}
+.admin-card-name { font-size: 16px; font-weight: 600; color: var(--color-wood-dark); }
+.admin-card-stardew { font-size: 12px; color: var(--color-accent); display: block; margin-bottom: 8rpx; }
+.admin-card-actions {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 8rpx;
+}
+.action-btn { font-size: 12px; padding: 4rpx 16rpx; }
+.action-btn.edit { color: var(--color-accent); border: 1px solid var(--color-accent); }
+.action-btn.delete { color: var(--color-heart); border: 1px solid var(--color-heart); }
+
+/* 统计 */
+.stats-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12rpx;
+}
+
+/* 表单弹窗 */
+.form-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: flex-end;
+}
+.form-overlay.active {
+  opacity: 1; pointer-events: auto;
+}
+.form-sheet {
+  background: var(--color-paper);
+  width: 100%;
+  max-height: 85vh;
+  border-top: 4px solid var(--color-wood-dark);
+  display: flex;
+  flex-direction: column;
+}
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx;
+  border-bottom: 2px solid var(--color-stardew-brown);
+}
+.form-title { font-size: 18px; font-weight: 700; color: var(--color-wood-dark); }
+.form-close { font-size: 20px; color: var(--color-muted); padding: 8rpx; }
+.form-body {
+  flex: 1;
+  padding: 24rpx;
+}
+.form-field {
+  display: block;
+  margin-bottom: 20rpx;
+}
+.field-label {
+  display: block;
+  font-size: 13px;
+  color: var(--color-muted);
+  margin-bottom: 6rpx;
+}
+.field-input, .field-textarea, .field-picker {
+  width: 100%;
+  padding: 12rpx;
+  border: 2px solid var(--color-stardew-brown);
+  background: var(--color-paper-light);
+  font-size: 14px;
+  color: var(--color-ink);
+  box-sizing: border-box;
+}
+.field-textarea { height: 120rpx; }
+.form-footer {
+  display: flex;
+  gap: 16rpx;
+  justify-content: flex-end;
+  padding: 20rpx 24rpx;
+  border-top: 2px solid var(--color-stardew-brown);
+}
+
+.empty-text {
+  display: block; text-align: center; padding: 40rpx; color: var(--color-muted);
+}
