@@ -1,16 +1,16 @@
 /**
  * 首页 — 校园地图
  */
-const localLandmarks = require('../../utils/landmarks')
-
 Page({
   data: {
     landmarks: [],
+    allLandmarks: [],
     progress: { total: 0, discovered: 0, percentage: 0 },
     selectedCategory: '',
     categories: ['全部', '建筑', '景观', '雕塑', '生活', '运动', '文化'],
     currentDate: '',
-    seasonEmoji: ''
+    seasonEmoji: '',
+    loading: true
   },
 
   onLoad() {
@@ -36,29 +36,26 @@ Page({
     })
   },
 
-  /** 加载地标：云函数优先，本地兜底 */
   async loadData() {
+    this.setData({ loading: true })
     try {
       const api = require('../../utils/api')
       const res = await api.getLandmarks()
-      if (res && res.code === 0 && res.data && res.data.length > 0) {
-        this.renderLandmarks(res.data)
-        return
-      }
-    } catch (e) {}
-    this.renderLandmarks(localLandmarks.LANDMARKS)
-  },
-
-  renderLandmarks(list) {
-    const all = list.map(l => ({
-      ...l,
-      difficultyDisplay: '🌾'.repeat(l.difficulty),
-      firstHint: l.hints?.[0] || ''
-    }))
-    this.setData({
-      landmarks: all,
-      progress: { total: all.length, discovered: 0, percentage: 0 }
-    })
+      const list = (res?.data || []).map(l => ({
+        ...l,
+        difficultyDisplay: '🌾'.repeat(l.difficulty),
+        firstHint: l.hints?.[0] || ''
+      }))
+      getApp().globalData.landmarkCache = res?.data || []
+      this.setData({
+        landmarks: list,
+        allLandmarks: list,
+        progress: { total: list.length, discovered: 0, percentage: 0 },
+        loading: false
+      })
+    } catch (e) {
+      this.setData({ loading: false })
+    }
   },
 
   loadProgress() {
@@ -68,12 +65,9 @@ Page({
   filterByCategory(e) {
     const category = e.currentTarget.dataset.category
     const cat = category === '全部' ? '' : category
-    const source = cat ? localLandmarks.getLandmarksByCategory(cat) : localLandmarks.LANDMARKS
-    const filtered = source.map(l => ({
-      ...l,
-      difficultyDisplay: '🌾'.repeat(l.difficulty),
-      firstHint: l.hints?.[0] || ''
-    }))
+    const filtered = cat
+      ? this.data.allLandmarks.filter(l => l.category === cat)
+      : this.data.allLandmarks
     this.setData({
       selectedCategory: category,
       landmarks: filtered

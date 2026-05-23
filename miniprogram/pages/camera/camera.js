@@ -134,7 +134,9 @@ Page({
   async triggerCheckin(landmarkId, confidence) {
     this.stopScanLoop()
 
-    const landmark = require('../../utils/landmarks').getLandmark(landmarkId)
+    const cache = getApp().globalData.landmarkCache || []
+    const landmark = cache.find(l => l.id === landmarkId || l._id === landmarkId)
+      || { name: landmarkId, stardewName: '', description: '', category: '' }
 
     this.setData({
       showSuccess: true,

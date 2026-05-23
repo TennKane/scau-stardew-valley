@@ -1,7 +1,8 @@
 App({
   globalData: {
     userInfo: null,
-    openid: null
+    openid: null,
+    landmarkCache: []       // 地标列表缓存，首页加载后其他页面共享
   },
 
   onLaunch() {
