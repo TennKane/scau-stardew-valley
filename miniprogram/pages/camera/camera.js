@@ -143,7 +143,7 @@ Page({
     })
 
     // 震动反馈
-    wx.vibrateShort({ type: 'medium' })
+    try { wx.vibrateShort({ type: 'medium' }) } catch (e) {}
 
     // 3秒后关闭动画
     setTimeout(() => {

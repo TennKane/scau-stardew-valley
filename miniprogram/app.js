@@ -2,12 +2,16 @@ App({
   globalData: {
     userInfo: null,
     openid: null,
-    envId: 'scau-stardew-0g6k3kf90e25b2a0'
+    cloudReady: false
   },
 
   onLaunch() {
-    wx.cloud.init({
-      env: this.globalData.envId
-    })
+    try {
+      wx.cloud.init()
+      this.globalData.cloudReady = true
+    } catch (e) {
+      console.warn('云开发未配置，使用演示模式', e)
+      this.globalData.cloudReady = false
+    }
   }
 })

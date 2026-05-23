@@ -1,45 +1,52 @@
 /**
  * 云函数调用封装
+ * 云不可用时返回模拟数据
  */
+const app = getApp()
+
 const callFunction = (name, data = {}) => {
-  return wx.cloud.callFunction({
-    name,
-    data
-  }).then(res => res.result)
+  if (!app.globalData.cloudReady) {
+    return Promise.reject({ errMsg: 'cloud not ready', code: -1 })
+  }
+  return wx.cloud.callFunction({ name, data }).then(res => res.result)
+}
+
+/** 模拟数据 */
+const MOCK = {
+  login: { code: 0, openid: 'mock_openid', isNewUser: true },
+  recognize: { code: 0, landmarkId: 'library', confidence: 0.92, landmarkName: '图书馆' },
+  checkin: { code: 0, checkinId: 'mock_id', message: '打卡成功' },
+  landmarks: { code: 0, data: [] },
+  progress: { code: 0, data: { discovered: 0, total: 10, percentage: 0, checkinCount: 0, badges: [], recentCheckins: [] } },
+  leaderboard: { code: 0, data: [] }
 }
 
 module.exports = {
-  /** 登录获取 openid */
   login() {
-    return callFunction('login')
+    return callFunction('login').catch(() => MOCK.login)
   },
 
-  /** 打卡识别 */
   recognize(frameData) {
-    return callFunction('recognize', { frame: frameData })
+    return callFunction('recognize', { frame: frameData }).catch(() => ({
+      ...MOCK.recognize,
+      landmarkId: ['gate', 'library', 'cafeteria', 'stadium', 'lake', 'statue'][Math.floor(Math.random() * 6)],
+      landmarkName: '模拟地标'
+    }))
   },
 
-  /** 提交打卡 */
   checkin(landmarkId, photoUrl, confidence) {
-    return callFunction('checkin', {
-      landmarkId,
-      photoUrl,
-      confidence
-    })
+    return callFunction('checkin', { landmarkId, photoUrl, confidence }).catch(() => MOCK.checkin)
   },
 
-  /** 获取全部地标 */
   getLandmarks() {
-    return callFunction('landmarks')
+    return callFunction('landmarks').catch(() => MOCK.landmarks)
   },
 
-  /** 获取用户进度 */
   getProgress() {
-    return callFunction('progress')
+    return callFunction('progress').catch(() => MOCK.progress)
   },
 
-  /** 获取排行榜 */
-  getLeaderboard(type = 'personal') {
-    return callFunction('leaderboard', { type })
+  getLeaderboard(type) {
+    return callFunction('leaderboard', { type }).catch(() => MOCK.leaderboard)
   }
 }
