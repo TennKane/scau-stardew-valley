@@ -65,7 +65,7 @@
 
       <scroll-view scroll-y class="form-body">
         <label class="form-field">
-          <text class="field-label">地标名称 *</text>
+          <text class="field-label">地标名称</text>
           <input class="field-input" value="{{form.name}}" data-field="name" bindinput="onFormInput" placeholder="如：校门" />
         </label>
         <label class="form-field">

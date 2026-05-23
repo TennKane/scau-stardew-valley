@@ -114,7 +114,7 @@
 }
 .field-input, .field-textarea, .field-picker {
   width: 100%;
-  padding: 12rpx;
+  padding: 20rpx 16rpx;
   border: 2px solid var(--color-stardew-brown);
   background: var(--color-paper-light);
   font-size: 14px;
