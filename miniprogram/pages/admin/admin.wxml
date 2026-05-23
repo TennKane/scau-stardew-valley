@@ -63,7 +63,7 @@
         <text class="form-close" bindtap="closeForm">✕</text>
       </view>
 
-      <scroll-view scroll-y class="form-body">
+      <view class="form-body">
         <label class="form-field">
           <text class="field-label">地标名称</text>
           <input class="field-input" value="{{form.name}}" data-field="name" bindinput="onFormInput" placeholder="如：校门" />
@@ -94,7 +94,7 @@
           <text class="field-label">线索（每行一条）</text>
           <textarea class="field-textarea" value="{{form.hints}}" data-field="hints" bindinput="onFormInput" placeholder="一行一条线索"></textarea>
         </label>
-      </scroll-view>
+      </view>
 
       <view class="form-footer">
         <view class="btn-secondary btn-sm" bindtap="closeForm">取消</view>
