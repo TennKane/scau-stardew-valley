@@ -27,6 +27,11 @@ Page({
 
   /** 从本地存储恢复用户信息 */
   loadLocalUser() {
+    const auth = wx.getStorageSync('userAuth')
+    if (auth && auth.openid) {
+      app.globalData.openid = auth.openid
+      app.globalData.role = auth.role || ''
+    }
     const saved = wx.getStorageSync('userProfile')
     if (saved) {
       app.globalData.openid = saved.openid
@@ -102,6 +107,7 @@ Page({
       if (res && res.openid) {
         app.globalData.openid = res.openid
         app.globalData.role = res.role || ''
+        wx.setStorageSync('userAuth', { openid: res.openid, role: res.role || '' })
         const saved = wx.getStorageSync('userProfile')
         // 优先级：本地保存 > 云端已有 > 默认
         const nickName = saved?.nickName || res.nickname || '星露谷探险家'
@@ -131,6 +137,7 @@ Page({
       content: '确定要退出登录吗？',
       success: (res) => {
         if (res.confirm) {
+          wx.removeStorageSync('userAuth')
           wx.removeStorageSync('userProfile')
           app.globalData.userInfo = null
           app.globalData.openid = null

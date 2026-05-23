@@ -1,15 +1,15 @@
 /**
  * 登录鉴权
- * 未登录时跳转到个人页
  */
 module.exports = {
   check() {
     const app = getApp()
     if (app.globalData.openid) return true
 
-    const saved = wx.getStorageSync('userProfile')
-    if (saved && saved.openid) {
-      app.globalData.openid = saved.openid
+    const auth = wx.getStorageSync('userAuth')
+    if (auth && auth.openid) {
+      app.globalData.openid = auth.openid
+      app.globalData.role = auth.role || ''
       return true
     }
 
