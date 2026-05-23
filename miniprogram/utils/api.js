@@ -1,7 +1,11 @@
 /**
- * API 封装
- * 云环境开通前返回模拟数据
+ * 云函数调用封装
  */
+const callFunction = (name, data = {}) => {
+  return wx.cloud.callFunction({ name, data }).then(res => res.result)
+}
+
+/** 降级：云函数不可用时的模拟数据 */
 const MOCK = {
   login: { code: 0, openid: 'demo_user', isNewUser: true },
   recognize: { code: 0, landmarkId: 'library', confidence: 0.92, landmarkName: '图书馆' },
@@ -13,24 +17,42 @@ const MOCK = {
 
 const idList = ['gate', 'library', 'cafeteria', 'stadium', 'lake', 'statue']
 
-module.exports = {
-  login() { return Promise.resolve(MOCK.login) },
+const withFallback = (fn, mock) => {
+  return (...args) => fn(...args).catch(() => mock)
+}
 
-  recognize(frameData) {
-    return Promise.resolve({
+module.exports = {
+  login: withFallback(
+    () => callFunction('login'),
+    MOCK.login
+  ),
+
+  recognize: withFallback(
+    (frameData) => callFunction('recognize', { frame: frameData }),
+    {
       ...MOCK.recognize,
       landmarkId: idList[Math.floor(Math.random() * idList.length)],
       landmarkName: '模拟识别'
-    })
-  },
+    }
+  ),
 
-  checkin(landmarkId, photoUrl, confidence) {
-    return Promise.resolve(MOCK.checkin)
-  },
+  checkin: withFallback(
+    (landmarkId, photoUrl, confidence) => callFunction('checkin', { landmarkId, photoUrl, confidence }),
+    MOCK.checkin
+  ),
 
-  getLandmarks() { return Promise.resolve(MOCK.landmarks) },
+  getLandmarks: withFallback(
+    () => callFunction('landmarks'),
+    MOCK.landmarks
+  ),
 
-  getProgress() { return Promise.resolve(MOCK.progress) },
+  getProgress: withFallback(
+    () => callFunction('progress'),
+    MOCK.progress
+  ),
 
-  getLeaderboard(type) { return Promise.resolve(MOCK.leaderboard) }
+  getLeaderboard: withFallback(
+    (type) => callFunction('leaderboard', { type }),
+    MOCK.leaderboard
+  )
 }

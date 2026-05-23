@@ -5,7 +5,6 @@ App({
   },
 
   onLaunch() {
-    // 云环境开通后，取消下面注释：
-    // wx.cloud.init({ env: 'your-env-id' })
+    wx.cloud.init({ env: 'cloud1-d3g8z6savb4e6d68e' })
   }
 })
