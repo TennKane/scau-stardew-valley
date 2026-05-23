@@ -47,20 +47,18 @@ Page({
 
   /** 保存用户信息到本地和云端 */
   saveProfile({ nickName, avatarUrl }) {
+    const current = app.globalData.userInfo || {}
     const data = {
       openid: app.globalData.openid,
-      nickName: nickName || '星露谷探险家',
-      avatarUrl: avatarUrl || ''
+      nickName: nickName || current.nickName || '星露谷探险家',
+      avatarUrl: avatarUrl !== undefined ? avatarUrl : (current.avatarUrl || '')
     }
     // 本地存储
     wx.setStorageSync('userProfile', data)
     // 更新全局
     app.globalData.userInfo = { nickName: data.nickName, avatarUrl: data.avatarUrl }
     // 更新页面
-    const update = { userInfo: app.globalData.userInfo }
-    if (nickName) update['userInfo.nickName'] = nickName
-    if (avatarUrl !== undefined) update['userInfo.avatarUrl'] = avatarUrl
-    this.setData(update)
+    this.setData({ userInfo: app.globalData.userInfo })
     // 同步到云端
     const api = require('../../utils/api')
     api.updateUser({ nickName: data.nickName, avatarUrl: data.avatarUrl })
