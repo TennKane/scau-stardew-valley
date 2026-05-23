@@ -32,20 +32,25 @@ Page({
     }
   },
 
-  loadStats() {
-    // TODO: 从云数据库加载统计数据
+  async loadStats() {
+    try {
+      const api = require('../../utils/api')
+      const res = await api.getProgress()
+      if (res && res.code === 0 && res.data) {
+        this.setData({
+          stats: {
+            totalCheckins: res.data.checkinCount || 0,
+            totalBadges: (res.data.badges || []).length,
+            daysActive: res.data.checkinCount || 0,
+            rank: '--'
+          }
+        })
+        return
+      }
+    } catch (e) {}
     this.setData({
-      stats: {
-        totalCheckins: 3,
-        totalBadges: 2,
-        daysActive: 1,
-        rank: '#42'
-      },
-      recentActivity: [
-        { action: '解锁地标', target: '校门', time: '2024-01-15 14:30' },
-        { action: '解锁地标', target: '图书馆', time: '2024-01-14 10:15' },
-        { action: '获得徽章', target: '初来乍到', time: '2024-01-14 10:15' }
-      ]
+      stats: { totalCheckins: 0, totalBadges: 0, daysActive: 0, rank: '--' },
+      recentActivity: []
     })
   },
 
@@ -56,8 +61,14 @@ Page({
     api.login().then(res => {
       wx.hideLoading()
       if (res && res.openid) {
-        getApp().globalData.openid = res.openid
-        this.loadUserInfo()
+        const app = getApp()
+        app.globalData.openid = res.openid
+        app.globalData.userInfo = { nickName: '星露谷探险家' }
+        this.setData({
+          hasLogin: true,
+          userInfo: app.globalData.userInfo
+        })
+        this.loadStats()
       }
     }).catch(() => {
       wx.hideLoading()
