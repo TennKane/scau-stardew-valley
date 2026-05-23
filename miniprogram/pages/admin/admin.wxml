@@ -83,8 +83,11 @@
           </picker>
         </label>
         <label class="form-field">
-          <text class="field-label">难度 (1-5)</text>
-          <slider min="1" max="5" step="1" value="{{form.difficulty}}" bindchange="onDifficultyChange" />
+          <text class="field-label">难度</text>
+          <view class="difficulty-row">
+            <slider class="difficulty-slider" min="1" max="5" step="1" value="{{form.difficulty}}" bindchange="onDifficultyChange" />
+            <text class="difficulty-display">{{form.difficulty}} 🌾</text>
+          </view>
         </label>
         <label class="form-field">
           <text class="field-label">适合季节（用顿号分隔）</text>

@@ -135,6 +135,22 @@
   display: flex;
   align-items: center;
 }
+.difficulty-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+.difficulty-slider {
+  flex: 1;
+}
+.difficulty-display {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--color-accent);
+  white-space: nowrap;
+  min-width: 80rpx;
+  text-align: center;
+}
 .form-footer {
   flex-shrink: 0;
   display: flex;
