@@ -8,28 +8,25 @@ const db = cloud.database()
 exports.main = async () => {
   const { OPENID } = cloud.getWXContext()
 
-  // 获取用户打卡记录
-  const checkins = await db.collection('checkins')
-    .where({ openid: OPENID })
-    .orderBy('createdAt', 'desc')
-    .get()
-
-  // 获取用户信息
-  const users = await db.collection('users')
-    .where({ openid: OPENID })
-    .get()
+  const [checkins, users, landmarksCount] = await Promise.all([
+    db.collection('checkins').where({ openid: OPENID }).orderBy('createdAt', 'desc').get(),
+    db.collection('users').where({ openid: OPENID }).get(),
+    db.collection('landmarks').count().catch(() => ({ total: 0 }))
+  ])
 
   const user = users.data[0] || {}
-  const totalLandmarks = 10
+  const totalLandmarks = landmarksCount.total || 0
+  const checkinCount = checkins.data.length
 
   return {
     code: 0,
     data: {
-      discovered: checkins.data.length,
+      discovered: checkinCount,
       total: totalLandmarks,
-      percentage: Math.round((checkins.data.length / totalLandmarks) * 100),
+      percentage: totalLandmarks ? Math.round((checkinCount / totalLandmarks) * 100) : 0,
       checkinCount: user.checkinCount || 0,
       badges: user.badges || [],
+      discoveredIds: [...new Set(checkins.data.map(c => c.landmarkId))],
       recentCheckins: checkins.data.slice(0, 10).map(c => ({
         landmarkId: c.landmarkId,
         time: c.createdAt
