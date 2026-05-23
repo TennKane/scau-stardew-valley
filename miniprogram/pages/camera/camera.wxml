@@ -1,0 +1,75 @@
+<!-- 相机打卡页 -->
+<view class="camera-page">
+
+  <!-- 摄像头 -->
+  <camera
+    class="camera-preview"
+    mode="normal"
+    flash="{{flashMode}}"
+    binderror="onError"
+    bindinitdone="onCameraReady"
+  />
+
+  <!-- 相机遮罩层 — 像素风取景框 -->
+  <view class="viewfinder-overlay">
+    <view class="viewfinder-frame">
+      <text class="viewfinder-icon">✦</text>
+    </view>
+
+    <!-- 提示文字 -->
+    <view class="hint-card {{hintVisible ? '' : 'hidden'}}">
+      <text class="hint-text">{{hintText}}</text>
+    </view>
+  </view>
+
+  <!-- 底部控制栏 -->
+  <view class="camera-bottom-bar">
+    <view class="bar-left">
+      <view class="btn-icon" bindtap="toggleFlash">
+        <text class="icon-emoji">{{flashMode === 'off' ? '☀️' : '⚡'}}</text>
+      </view>
+    </view>
+
+    <view class="bar-center">
+      <view class="btn-shutter" bindtap="takePhoto">
+        <view class="shutter-inner"></view>
+      </view>
+    </view>
+
+    <view class="bar-right">
+      <view class="btn-icon">
+        <text class="icon-emoji">🔄</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最近打卡 -->
+  <view class="recent-bar">
+    <text class="recent-label">最近探索</text>
+    <scroll-view scroll-x class="recent-scroll">
+      <view class="recent-items">
+        <view class="recent-item" wx:for="{{recentCheckins}}" wx:key="index">
+          <text class="recent-badge">{{item.badge}}</text>
+          <text class="recent-name">{{item.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 打卡成功弹窗 -->
+  <view class="success-overlay {{showSuccess ? 'active' : ''}}">
+    <view class="success-card">
+      <view class="success-star-container">
+        <text class="success-star">⭐</text>
+      </view>
+      <text class="success-title">发现新地标！</text>
+      <text class="success-name">{{successLandmark.stardewName || successLandmark.name}}</text>
+      <view class="success-divider"></view>
+      <text class="success-desc">{{successLandmark.description}}</text>
+      <view class="success-footer">
+        <text class="success-badge badge">{{successLandmark.category}}</text>
+      </view>
+    </view>
+  </view>
+
+</view>

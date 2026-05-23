@@ -1,0 +1,55 @@
+<!-- 个人页 -->
+<view class="page-profile">
+
+  <!-- 用户卡片 -->
+  <view class="user-card card" wx:if="{{hasLogin}}">
+    <view class="user-avatar">
+      <text class="avatar-placeholder">👤</text>
+    </view>
+    <view class="user-info">
+      <text class="user-name">{{userInfo.nickName || '星露谷探险家'}}</text>
+      <text class="user-id">ID: {{openid || '---'}}</text>
+    </view>
+  </view>
+
+  <!-- 未登录 -->
+  <view class="user-card card" wx:else>
+    <view class="login-prompt">
+      <text class="login-text">登录以同步你的探索记录</text>
+      <view class="btn-primary" bindtap="login">微信登录</view>
+    </view>
+  </view>
+
+  <!-- 统计数据 -->
+  <view class="stats-grid">
+    <view class="stat-card card">
+      <text class="stat-value">{{stats.totalCheckins}}</text>
+      <text class="stat-label">打卡次数</text>
+    </view>
+    <view class="stat-card card">
+      <text class="stat-value">{{stats.totalBadges}}</text>
+      <text class="stat-label">获得徽章</text>
+    </view>
+    <view class="stat-card card">
+      <text class="stat-value">{{stats.daysActive}}</text>
+      <text class="stat-label">活跃天数</text>
+    </view>
+    <view class="stat-card card">
+      <text class="stat-value">{{stats.rank}}</text>
+      <text class="stat-label">排名</text>
+    </view>
+  </view>
+
+  <!-- 最近动态 -->
+  <view class="section">
+    <text class="section-title">📜 最近动态</text>
+    <view class="activity-list">
+      <view class="activity-item" wx:for="{{recentActivity}}" wx:key="index">
+        <text class="activity-action">{{item.action}}</text>
+        <text class="activity-target">{{item.target}}</text>
+        <text class="activity-time">{{item.time}}</text>
+      </view>
+    </view>
+  </view>
+
+</view>

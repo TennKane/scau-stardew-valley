@@ -1,0 +1,165 @@
+/* ============================================
+   星露谷 · 校园探索 — 全局样式
+   像素暖色调 · 木质纸感
+   ============================================ */
+
+/* CSS 变量 */
+page {
+  --color-wood-dark: #5c3d2e;
+  --color-wood: #7a5233;
+  --color-wood-light: #a67c52;
+  --color-paper: #f5e6c8;
+  --color-paper-light: #faf0dc;
+  --color-ink: #3d2b1f;
+  --color-accent: #6b8f3a;
+  --color-accent-light: #8fb55a;
+  --color-gold: #d4a017;
+  --color-sky: #87ceeb;
+  --color-heart: #c75b5b;
+  --color-stardew-brown: #c4a882;
+  --color-stardew-green: #5b8c3a;
+  --color-muted: #8b7355;
+  --shadow-soft: 2px 2px 0 rgba(92, 61, 46, 0.15);
+  --shadow-pixel: 3px 3px 0 rgba(92, 61, 46, 0.2);
+  --border-pixel: 2px solid var(--color-wood-dark);
+
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+}
+
+/* 像素风格边框 */
+.pixel-border {
+  border: 3px solid var(--color-wood-dark);
+  border-radius: 0;
+  box-shadow: var(--shadow-pixel);
+}
+
+.pixel-border-light {
+  border: 2px solid var(--color-stardew-brown);
+  border-radius: 4px;
+}
+
+/* 卡片 */
+.card {
+  background: var(--color-paper-light);
+  border: var(--border-pixel);
+  box-shadow: var(--shadow-pixel);
+  padding: 16px;
+  margin: 8px 0;
+  image-rendering: pixelated;
+}
+
+/* 按钮 */
+.btn-primary {
+  background: var(--color-accent);
+  color: white;
+  border: 3px solid var(--color-wood-dark);
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: var(--shadow-pixel);
+  text-align: center;
+  transition: all 0.1s;
+}
+
+.btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 rgba(92, 61, 46, 0.2);
+}
+
+.btn-secondary {
+  background: var(--color-stardew-brown);
+  color: var(--color-ink);
+  border: 3px solid var(--color-wood-dark);
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: var(--shadow-pixel);
+  text-align: center;
+}
+
+.btn-secondary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 rgba(92, 61, 46, 0.2);
+}
+
+/* 标题 */
+.title-lg {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-wood-dark);
+  margin-bottom: 8px;
+}
+
+.title-md {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-wood);
+  margin-bottom: 6px;
+}
+
+/* 文本 */
+.text-muted {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+/* 标签 */
+.badge {
+  display: inline-block;
+  background: var(--color-gold);
+  color: white;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 2px solid var(--color-wood-dark);
+}
+
+/* 动画 */
+@keyframes pop-in {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+/* flex 工具 */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+/* 安全区域 */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 12px);
+}

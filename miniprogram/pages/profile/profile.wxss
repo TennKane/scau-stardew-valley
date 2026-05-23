@@ -1,0 +1,88 @@
+/* ========== 个人页 ========== */
+.page-profile {
+  min-height: 100vh;
+  padding: 0 24rpx 120rpx;
+}
+
+.user-card {
+  margin-bottom: 20rpx;
+}
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: var(--color-stardew-brown);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12rpx;
+}
+.avatar-placeholder {
+  font-size: 48rpx;
+}
+.user-info {
+  text-align: center;
+}
+.user-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-wood-dark);
+  display: block;
+}
+.user-id {
+  font-size: 11px;
+  color: var(--color-muted);
+}
+
+.login-prompt {
+  text-align: center;
+  padding: 16rpx;
+}
+.login-text {
+  font-size: 14px;
+  color: var(--color-muted);
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+/* 统计网格 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12rpx;
+  margin-bottom: 24rpx;
+}
+.stat-card {
+  text-align: center;
+  padding: 12rpx;
+}
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-accent);
+  display: block;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-wood-dark);
+  margin-bottom: 12rpx;
+  display: block;
+}
+
+.activity-list {
+  background: var(--color-paper-light);
+  border: 2px solid var(--color-stardew-brown);
+}
+.activity-item {
+  padding: 12rpx 16rpx;
+  border-bottom: 1px solid var(--color-stardew-brown);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-action { font-size: 12px; color: var(--color-muted); }
+.activity-target { font-size: 13px; font-weight: 600; color: var(--color-ink); }
+.activity-time { font-size: 11px; color: var(--color-muted); }

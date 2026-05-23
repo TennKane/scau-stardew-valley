@@ -1,0 +1,39 @@
+<!-- 地标详情 -->
+<view class="page-result" wx:if="{{landmark}}">
+
+  <!-- 顶部装饰 -->
+  <view class="hero-section {{discovered ? '' : 'undiscovered'}}">
+    <text class="hero-icon">{{discovered ? '🏛️' : '❓'}}</text>
+    <text class="hero-name">{{landmark.stardewName}}</text>
+    <text class="hero-sub">{{landmark.name}}</text>
+    <view class="hero-divider"></view>
+    <text class="hero-desc">{{landmark.description}}</text>
+  </view>
+
+  <!-- 打卡信息 -->
+  <view class="info-section card" wx:if="{{discovered}}">
+    <view class="info-row">
+      <text class="info-label">🗂️ 分类</text>
+      <text class="badge">{{landmark.category}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">⭐ 难度</text>
+      <text>{{'🌾 '.repeat(landmark.difficulty)}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">📅 适合季节</text>
+      <text>{{landmark.seasonHint.join(' / ')}}</text>
+    </view>
+  </view>
+
+  <!-- 线索 -->
+  <view class="hints-section card">
+    <text class="title-md">💡 探索线索</text>
+    <view class="hint-list">
+      <text class="hint-item" wx:for="{{landmark.hints}}" wx:key="index">
+        {{index + 1}}. {{item}}
+      </text>
+    </view>
+  </view>
+
+</view>

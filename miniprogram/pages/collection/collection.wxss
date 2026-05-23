@@ -1,0 +1,111 @@
+/* ========== 图鉴页 ========== */
+.page-collection {
+  min-height: 100vh;
+  padding: 0 24rpx 120rpx;
+}
+
+.stats-card { margin-bottom: 24rpx; }
+.stats-row {
+  display: flex;
+  justify-content: space-around;
+  padding: 16rpx 0;
+}
+.stat-item {
+  text-align: center;
+}
+.stat-number {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-wood-dark);
+  display: block;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--color-muted);
+}
+.stat-divider {
+  width: 1px;
+  background: var(--color-stardew-brown);
+}
+
+.section {
+  margin-bottom: 24rpx;
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-wood-dark);
+  margin-bottom: 12rpx;
+  display: block;
+}
+.toggle-btn {
+  font-size: 12px;
+  color: var(--color-accent);
+  padding: 4rpx 12rpx;
+  border: 1px solid var(--color-accent);
+}
+
+/* 徽章 */
+.badge-scroll {
+  white-space: nowrap;
+  margin-bottom: 8rpx;
+}
+.badge-list {
+  display: inline-flex;
+  gap: 16rpx;
+}
+.badge-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
+  padding: 16rpx;
+  background: var(--color-paper-light);
+  border: 2px solid var(--color-stardew-brown);
+  width: 140rpx;
+}
+.badge-item.locked {
+  opacity: 0.5;
+  filter: grayscale(1);
+}
+.badge-icon { font-size: 40rpx; }
+.badge-name { font-size: 11px; color: var(--color-ink); text-align: center; }
+
+/* 地标网格 */
+.landmark-grid {
+  display: grid;
+  gap: 12rpx;
+}
+.landmark-grid.grid {
+  grid-template-columns: 1fr 1fr;
+}
+.landmark-grid.list {
+  grid-template-columns: 1fr;
+}
+.landmark-item {
+  background: var(--color-paper-light);
+  border: 2px solid var(--color-stardew-brown);
+  padding: 16rpx;
+  text-align: center;
+}
+.landmark-item.undiscovered {
+  opacity: 0.5;
+}
+.item-icon { font-size: 40rpx; margin-bottom: 4rpx; }
+.item-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-wood-dark);
+  display: block;
+}
+.item-stardew {
+  font-size: 11px;
+  color: var(--color-accent);
+  display: block;
+}

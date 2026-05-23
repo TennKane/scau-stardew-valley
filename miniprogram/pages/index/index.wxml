@@ -1,0 +1,67 @@
+<!-- 首页/地图 -->
+<view class="page-index">
+
+  <!-- 头部 — 季节 + 进度 -->
+  <view class="header-section">
+    <view class="header-top">
+      <text class="season-emoji">{{seasonEmoji}}</text>
+      <text class="date-text">{{currentDate}}</text>
+    </view>
+    <text class="title-lg">星露谷 · 校园</text>
+    <text class="subtitle">探索发现属于你的校园角落</text>
+
+    <view class="progress-card">
+      <view class="progress-row">
+        <text class="progress-label">探索进度</text>
+        <text class="progress-count">{{progress.discovered}} / {{progress.total}}</text>
+      </view>
+      <view class="progress-bar-bg">
+        <view class="progress-bar-fill" style="width: {{progress.percentage}}%"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分类筛选 -->
+  <scroll-view class="category-scroll" scroll-x>
+    <view class="category-list">
+      <view
+        class="category-item {{selectedCategory === item ? 'active' : ''}}"
+        wx:for="{{categories}}" wx:key="index"
+        bindtap="filterByCategory"
+        data-category="{{item}}"
+      >
+        <text>{{item}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 地标列表 -->
+  <view class="landmark-list">
+    <view
+      class="landmark-card card"
+      wx:for="{{landmarks}}" wx:key="id"
+      bindtap="goToDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="landmark-header">
+        <text class="landmark-name">{{item.name}}</text>
+        <text class="badge">{{item.category}}</text>
+      </view>
+      <text class="landmark-stardew">{{item.stardewName}}</text>
+      <text class="landmark-desc">{{item.description}}</text>
+      <view class="landmark-footer">
+        <text class="landmark-difficulty">
+          难度: {{'🌾'.repeat(item.difficulty)}}
+        </text>
+        <text class="landmark-hint">💡 {{item.hints[0]}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快速探索按钮 -->
+  <view class="explore-fab" bindtap="goToCamera">
+    <text class="explore-fab-icon">🔍</text>
+    <text class="explore-fab-text">探索</text>
+  </view>
+
+</view>

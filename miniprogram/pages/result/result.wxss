@@ -1,0 +1,60 @@
+/* ========== 地标详情 ========== */
+.page-result {
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+
+.hero-section {
+  background: linear-gradient(180deg, var(--color-wood-dark) 0%, var(--color-paper) 100%);
+  padding: 60rpx 40rpx;
+  text-align: center;
+}
+.hero-section.undiscovered { opacity: 0.7; }
+.hero-icon { font-size: 80rpx; display: block; margin-bottom: 16rpx; }
+.hero-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-accent);
+  display: block;
+  margin-bottom: 4rpx;
+}
+.hero-sub {
+  font-size: 16px;
+  color: var(--color-paper-light);
+  display: block;
+  margin-bottom: 16rpx;
+}
+.hero-divider {
+  width: 80rpx;
+  height: 2px;
+  background: var(--color-gold);
+  margin: 0 auto 16rpx;
+}
+.hero-desc {
+  font-size: 14px;
+  color: var(--color-paper);
+  line-height: 1.6;
+  display: block;
+}
+
+.info-section {
+  margin: 24rpx;
+}
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8rpx 0;
+  border-bottom: 1px solid var(--color-stardew-brown);
+}
+.info-row:last-child { border-bottom: none; }
+.info-label { font-size: 13px; color: var(--color-muted); }
+
+.hints-section { margin: 0 24rpx; }
+.hint-list { margin-top: 8rpx; }
+.hint-item {
+  display: block;
+  font-size: 13px;
+  color: var(--color-ink);
+  padding: 6rpx 0;
+}

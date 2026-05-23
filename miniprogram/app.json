@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/camera/camera",
+    "pages/collection/collection",
+    "pages/profile/profile",
+    "pages/result/result"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#5c3d2e",
+    "navigationBarTitleText": "星露谷 · 校园探索",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5e6c8"
+  },
+  "tabBar": {
+    "color": "#8b7355",
+    "selectedColor": "#5c3d2e",
+    "backgroundColor": "#f5e6c8",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "地图",
+        "iconPath": "images/map.png",
+        "selectedIconPath": "images/map_active.png"
+      },
+      {
+        "pagePath": "pages/camera/camera",
+        "text": "探索",
+        "iconPath": "images/camera.png",
+        "selectedIconPath": "images/camera_active.png"
+      },
+      {
+        "pagePath": "pages/collection/collection",
+        "text": "图鉴",
+        "iconPath": "images/collection.png",
+        "selectedIconPath": "images/collection_active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/profile.png",
+        "selectedIconPath": "images/profile_active.png"
+      }
+    ]
+  },
+  "requiredPrivateInfos": [],
+  "plugins": {},
+  "useExtendedLib": {},
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

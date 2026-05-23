@@ -1,0 +1,66 @@
+<!-- 图鉴页 -->
+<view class="page-collection">
+
+  <!-- 统计 -->
+  <view class="stats-card card">
+    <text class="title-md">探索图鉴</text>
+    <view class="stats-row">
+      <view class="stat-item">
+        <text class="stat-number">{{stats.discovered}}</text>
+        <text class="stat-label">已发现</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-number">{{stats.total}}</text>
+        <text class="stat-label">总数</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-number">{{stats.percentage}}%</text>
+        <text class="stat-label">完成度</text>
+      </view>
+    </view>
+    <view class="progress-bar-bg">
+      <view class="progress-bar-fill" style="width: {{stats.percentage}}%"></view>
+    </view>
+  </view>
+
+  <!-- 徽章 -->
+  <view class="section">
+    <text class="section-title">🏅 成就徽章</text>
+    <scroll-view class="badge-scroll" scroll-x>
+      <view class="badge-list">
+        <view class="badge-item {{item.unlocked ? '' : 'locked'}}" wx:for="{{badges}}" wx:key="name">
+          <text class="badge-icon">{{item.unlocked ? item.icon : '🔒'}}</text>
+          <text class="badge-name">{{item.unlocked ? item.name : '???'}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 地标列表 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">📍 地标图鉴</text>
+      <text class="toggle-btn" bindtap="toggleView">
+        {{viewMode === 'grid' ? '列表' : '网格'}}
+      </text>
+    </view>
+
+    <view class="landmark-grid {{viewMode}}">
+      <view
+        class="landmark-item {{item.discovered === false ? 'undiscovered' : ''}}"
+        wx:for="{{discovered}}" wx:key="id"
+        bindtap="goToDetail"
+        data-id="{{item.id}}"
+      >
+        <view class="item-icon">
+          <text>{{item.discovered === false ? '❓' : '🏛️'}}</text>
+        </view>
+        <text class="item-name">{{item.discovered === false ? '???' : item.name}}</text>
+        <text class="item-stardew" wx:if="{{item.discovered !== false}}">{{item.stardewName}}</text>
+      </view>
+    </view>
+  </view>
+
+</view>
