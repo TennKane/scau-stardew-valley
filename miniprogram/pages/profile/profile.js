@@ -103,8 +103,9 @@ Page({
         app.globalData.openid = res.openid
         app.globalData.role = res.role || ''
         const saved = wx.getStorageSync('userProfile')
-        const nickName = saved?.nickName || '星露谷探险家'
-        const avatarUrl = saved?.avatarUrl || ''
+        // 优先级：本地保存 > 云端已有 > 默认
+        const nickName = saved?.nickName || res.nickname || '星露谷探险家'
+        const avatarUrl = saved?.avatarUrl || res.avatar || ''
         app.globalData.userInfo = { nickName, avatarUrl }
         this.setData({
           hasLogin: true,
@@ -112,7 +113,6 @@ Page({
           openid: res.openid,
           isAdmin: res.role === 'admin'
         })
-        this.saveProfile({ nickName, avatarUrl })
         this.loadStats()
       }
     }).catch(() => {

@@ -32,12 +32,14 @@ exports.main = async (event, context) => {
     })
   }
 
-  const userData = user?.data?.[0] || { role: '' }
+  const userData = user?.data?.[0] || { role: '', nickname: '', avatar: '' }
 
   return {
     code: 0,
     openid: OPENID,
     role: userData.role || '',
+    nickname: userData.nickname || '',
+    avatar: userData.avatar || '',
     isNewUser: !user || user.data.length === 0
   }
 }
