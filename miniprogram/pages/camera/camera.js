@@ -33,6 +33,7 @@ Page({
   },
 
   onLoad() {
+    if (!require('../../utils/auth').check()) return
     this.startScanLoop()
     this.loadRecentCheckins()
   },

@@ -12,10 +12,12 @@ Page({
   },
 
   onLoad() {
+    if (!require('../../utils/auth').check()) return
     this.loadData()
   },
 
   onShow() {
+    if (!require('../../utils/auth').check()) return
     this.loadProgress()
   },
 

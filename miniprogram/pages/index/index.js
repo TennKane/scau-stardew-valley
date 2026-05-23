@@ -14,11 +14,13 @@ Page({
   },
 
   onLoad() {
+    if (!require('../../utils/auth').check()) return
     this.loadData()
     this.setDateInfo()
   },
 
   onShow() {
+    if (!require('../../utils/auth').check()) return
     this.loadProgress()
   },
 
